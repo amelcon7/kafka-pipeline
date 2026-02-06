@@ -6,6 +6,7 @@ from pydantic import ValidationError
 from models import CRMEvent
 from db import get_connection
 from storage import write_event
+from parquet_writer import write_event_parquet
 
 
 TOPIC = "crm.events.raw"
@@ -64,6 +65,7 @@ def process_event(event: CRMEvent):
         conn.commit()
 
         write_event(event.model_dump(mode="json"))
+        write_event_parquet(event.model_dump(mode="json"))        
 
         return True
 
@@ -98,6 +100,8 @@ def main():
         try:
             payload = json.loads(msg.value())
             event = CRMEvent.model_validate(payload)
+
+            print(f"➡️ Processing event {event.event_id}")
 
             process_event(event)
             consumer.commit(msg)

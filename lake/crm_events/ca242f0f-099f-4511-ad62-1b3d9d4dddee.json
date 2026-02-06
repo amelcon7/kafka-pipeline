@@ -1,0 +1,11 @@
+{
+  "event_id": "ca242f0f-099f-4511-ad62-1b3d9d4dddee",
+  "event_type": "account_created",
+  "source": "salesforce",
+  "timestamp": "2026-02-06T21:51:30.000605",
+  "payload": {
+    "account_id": "001xx000003NGsY",
+    "industry": "Healthcare",
+    "region": "US"
+  }
+}
