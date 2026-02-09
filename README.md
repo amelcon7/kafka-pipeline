@@ -31,8 +31,8 @@ Agents consume downstream outputs, not Kafka directly.
 ## Architecture Overview
 
 ### High-Level Flow
-CRM Event Producer
 ```yaml
+CRM Event Producer
 |
 v
 Kafka Topic: crm.events.raw
@@ -65,7 +65,7 @@ C -.->|Invalid Events| X[Rejected Before Kafka]
 * Consumer is replay-safe and idempotent
 * Parquet output is partitioned for analytics
 
-__Event Contract__
+## Event Contract
 
 All events must conform to the following schema:
 ```
@@ -82,13 +82,13 @@ All events must conform to the following schema:
 }
 ```
 
-Schema validation is enforced using Pydantic.
+Schema validation is enforced using __Pydantic.__
 
 ## Idempotency & Replay Safety
 
-* event_id is globally unique
+* `event_id` is globally unique
 
-* Consumer maintains a processed_events table
+* Consumer maintains a `processed_events` table
 
 * Duplicate or replayed events are safely ignored
 
@@ -106,9 +106,9 @@ This enables:
 
 __Postgres (Audit & Analytics)__
 
-* processed_events – deduplication / idempotency
+* `processed_events` – deduplication / idempotency
 
-* events – structured analytics table
+* `events` – structured analytics table
 
 __Parquet Data Lake__
 ```sql
@@ -180,7 +180,7 @@ Expected behavior:
 
 1. Stop the consumer
 
-2. estart the consumer
+2. Restart the consumer
 
 3. Re-send the same events
 
